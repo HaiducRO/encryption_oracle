@@ -1,5 +1,5 @@
 # Use the official Rust image to build the app
-FROM rust:1.77 AS builder
+FROM rust:latest AS builder
 
 # Set working directory inside container
 WORKDIR /app
@@ -11,7 +11,7 @@ COPY . .
 RUN cargo build --release
 
 # Use a minimal Debian image for runtime
-FROM debian:buster-slim
+FROM ubuntu:22.04
 
 # Install necessary system dependencies
 RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*

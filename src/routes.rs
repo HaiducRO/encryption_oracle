@@ -10,11 +10,15 @@ use axum::{
 
 pub fn routes() -> Router{
     Router::new()
+        .route("/", get(root))
         .route("/encrypt", post(post_encrypt))
         .route("/decrypt", post(post_decrypt))
-        .route("/health", get(health_check))
+        
 }
-
+#[debug_handler]
+async fn root() -> &'static str {
+    "Encryption Oracle is running!"
+}
 #[debug_handler]
 pub async fn post_encrypt(
     Json(payload): Json<EncryptionRequest>,
@@ -35,7 +39,3 @@ pub async fn post_decrypt(
     }
 } 
 
-#[debug_handler]
-pub async fn health_check() -> &'static str{
-    "Oracle is runnging"
-}
